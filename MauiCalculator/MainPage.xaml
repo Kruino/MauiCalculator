@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiCalculator.MainPage"
+             xmlns:viewmodel="clr-namespace:MauiCalculator.ViewModel"
+             x:DataType="viewmodel:MainModelView">
+    
+    <Grid RowDefinitions="100, auto, auto, *"
+          ColumnDefinitions=".75*, .25*"
+          Padding="10"
+          RowSpacing="10"
+          ColumnSpacing="10">
+      
+    <Grid Grid.ColumnSpan="2" ColumnDefinitions=".30*, .70*">
+        <Image Grid.ColumnSpan="1"
+               Source="toast.png"/>
+        <Label Grid.Column="1"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               FontSize="24"
+               FontAttributes="Bold"
+               Text="#_ToastLator_#"/>
+    </Grid>
+
+    <Entry Placeholder="Enter calculator name"
+           Text="{Binding Text}"
+           Grid.Row="1"/>
+    
+    <Button Text="Add"
+            Command="{Binding AddCommand}"
+            Grid.Row="1"
+            Grid.Column="1"/>
+    
+    <Label Text="Swipe left to delete Calculator." 
+           HorizontalOptions="Center"
+           Grid.Row="2" Grid.ColumnSpan="2"/>
+    
+   <CollectionView Grid.Row="3" Grid.ColumnSpan="2"
+                   ItemsSource="{Binding Items}"
+                   SelectionMode="None">
+       <CollectionView.ItemTemplate>
+           <DataTemplate x:DataType="{x:Type x:String}">
+               <SwipeView>
+                   <SwipeView.RightItems>
+                       <SwipeItems>
+                           <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainModelView}}, Path=DeleteCommand}"
+                                          CommandParameter="{Binding .}">
+                               <Grid WidthRequest="50" 
+                                     HeightRequest="50"
+                                     RowDefinitions="auto"
+                                     VerticalOptions="Center">
+                                     
+                                   <Frame CornerRadius="0"
+                                          WidthRequest="50" 
+                                          HeightRequest="50" 
+                                          BackgroundColor="Red"
+                                          BorderColor="Transparent"
+                                          HorizontalOptions="Center">
+                                       
+                                   </Frame>
+                                   <Label Text="X"
+                                          FontSize="25"
+                                          TextColor="White"
+                                          VerticalOptions="Center"
+                                          HorizontalOptions="Center"/>
+                               </Grid>
+                           </SwipeItemView>
+                       </SwipeItems>
+                   </SwipeView.RightItems>
+                   <Grid>
+                       <Frame>
+                           <Frame.GestureRecognizers>
+                               <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainModelView}}, Path=TapCommand}"
+                                                     CommandParameter="{Binding .}"/>
+                           </Frame.GestureRecognizers>
+                           <Label Text="{Binding .}"
+                                  FontSize="24"/>
+                       </Frame>
+                   </Grid>
+               </SwipeView>
+           </DataTemplate>
+       </CollectionView.ItemTemplate>
+   </CollectionView>
+</Grid>
+
+</ContentPage>

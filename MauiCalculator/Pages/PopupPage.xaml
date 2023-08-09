@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             Color="Transparent"
+             x:Class="MauiCalculator.Pages.PopupPage"
+             CanBeDismissedByTappingOutsideOfPopup="True">
+    <Frame BorderColor="Black">
+        <Grid
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            RowDefinitions=".75*, .25*"
+            WidthRequest="200">
+            <Image
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Source="toast.png"/>
+            <Label 
+                x:Name="MainLabel"
+                Grid.Row="1"
+                FontSize="24"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
+        </Grid>
+    </Frame>
+    
+</mct:Popup>
