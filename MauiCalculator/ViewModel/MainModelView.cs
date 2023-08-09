@@ -6,7 +6,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiCalculator.Pages;
 using MauiCalculator.Classes;
-using Newtonsoft.Json;
 
 namespace MauiCalculator.ViewModel;
 
@@ -15,48 +14,45 @@ public partial class MainModelView : ObservableObject
     public MainModelView()
     {
         Items = new ObservableCollection<string>();
+        Calculator.CalculatorsChanged += OnCalculatorListChanged;
+        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         
         var window = App.Window;
-        window.Created += (s, e) =>
+        window.Created += async (s, e) =>
         {
             var toast = Toast.Make("Welcome :D", ToastDuration.Short, 14);
+            await toast.Show(cancellationTokenSource.Token);
         };
-        window.Resumed += (s, e) =>
+        window.Resumed += async (s, e) =>
         {
             var toast = Toast.Make("Welcome Back :D", ToastDuration.Short, 14);
+            await toast.Show(cancellationTokenSource.Token);
         };
+    }
+
+    private void OnCalculatorListChanged(object sender, Dictionary<string, string> e)
+    {
+        Items = new ObservableCollection<string>(e.Keys.ToList());
     }
     
     [ObservableProperty] 
-    ObservableCollection<string> _items;
+    static ObservableCollection<string> _items;
 
     [ObservableProperty] 
     string _text;
 
+    [ObservableProperty] 
+    private string _value = string.Empty;
+    
     private PopupService _popupService = new();
     
     [RelayCommand]
-    void Add()
+    void Add(string value = null)
     {
         if(string.IsNullOrWhiteSpace(Text))
             Text = "Calculator";
         
-        if (Calculator.Calculators == null)
-            Calculator.Calculators = new Dictionary<string, string>();
-        
-        var number = 1;
-        if (Items.Contains(Text))
-        {
-            while (Items.Contains( $"{Text} {number}"))
-            {
-                number++;
-            }
-
-            Text = $"{Text} {number}";
-        }
-            
-        Calculator.Calculators.Add(Text, "0");
-        Items.Add(Text);
+        Calculator.AddCalculator(Text, "0");
         
         Text = string.Empty;
     }
