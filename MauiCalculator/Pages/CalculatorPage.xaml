@@ -24,7 +24,8 @@
                                 HorizontalOptions="Start"
                                 VerticalOptions="Start"
                                 Command="{Binding CreateNewWithValueCommand}"
-                                BackgroundColor="#474c54"/>
+                                BackgroundColor="#474c54"
+                                TextColor="White"/>
                         <Label Text="{Binding NumberString}"
                                FontSize="35"
                                VerticalOptions="Center"
@@ -41,19 +42,22 @@
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="("
                                         Text="("
-                                        BackgroundColor="#474c54"/>
+                                        BackgroundColor="#474c54"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter=")" 
                                         Grid.Column="1" 
                                         Text=")"
-                                        BackgroundColor="#474c54"/>
+                                        BackgroundColor="#474c54"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="%" 
                                         Grid.Column="2" 
                                         Text="%"
-                                        BackgroundColor="#474c54"/>
+                                        BackgroundColor="#474c54"
+                                        TextColor="White"/>
                                 
                                 <Grid x:Name="ChangeGrid"
                                       RowDefinitions="*, *"
@@ -66,94 +70,112 @@
                                                 CommandParameter="AC" 
                                                 Grid.ColumnSpan="2"
                                                 Text="AC"
-                                                BackgroundColor="#a8475d"/>
+                                                BackgroundColor="#a8475d"
+                                                TextColor="White"/>
                                         <Button x:Name="BackButton"
                                                 Grid.Row="1"
                                                 Grid.ColumnSpan="2"
                                                 Command="{Binding AddToNumberCommand}" 
                                                 CommandParameter="Back" 
                                                 Text="Back"
-                                                BackgroundColor="DarkOrange"/>
+                                                BackgroundColor="DarkOrange"
+                                                TextColor="White"/>
                                 </Grid>
                                 
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="7" 
                                         Grid.Row="1" Text="7"
-                                        BackgroundColor="#323840"/>
+                                        BackgroundColor="#323840"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="8" 
                                         Grid.Row="1" Grid.Column="1" Text="8"
-                                        BackgroundColor="#323840"/>
+                                        BackgroundColor="#323840"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="9" 
                                         Grid.Row="1" Grid.Column="2" Text="9"
-                                        BackgroundColor="#323840"/>
+                                        BackgroundColor="#323840"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="/" 
                                         Grid.Row="1" Grid.Column="3" Text="/"
-                                        BackgroundColor="#474c54"/>
+                                        BackgroundColor="#474c54"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="4" 
                                         Grid.Row="2" Text="4"
-                                        BackgroundColor="#323840"/>
+                                        BackgroundColor="#323840"
+                                        TextColor="White"/>
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="5"
                                         Grid.Row="2" Grid.Column="1" Text="5"
-                                        BackgroundColor="#323840"/>
+                                        BackgroundColor="#323840"
+                                        TextColor="White"/>
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="6" 
                                         Grid.Row="2" Grid.Column="2" Text="6"
-                                        BackgroundColor="#323840"/>
+                                        BackgroundColor="#323840"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="*" 
                                         Grid.Row="2" Grid.Column="3" Text="*"
-                                        BackgroundColor="#474c54"/>
+                                        BackgroundColor="#474c54"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="1" 
                                         Grid.Row="3" Text="1"
-                                        BackgroundColor="#323840"/>
+                                        BackgroundColor="#323840"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="2" 
                                         Grid.Row="3" Grid.Column="1" Text="2"
-                                        BackgroundColor="#323840"/>
+                                        BackgroundColor="#323840"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="3" 
                                         Grid.Row="3" Grid.Column="2" Text="3"
-                                        BackgroundColor="#323840"/>
+                                        BackgroundColor="#323840"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="-" 
                                         Grid.Row="3" Grid.Column="3" Text="-"
-                                        BackgroundColor="#474c54"/>
+                                        BackgroundColor="#474c54"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="0" 
                                         Grid.Row="4" Grid.Column="1" Text="0"
-                                        BackgroundColor="#323840"/>
+                                        BackgroundColor="#323840"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="." 
                                         Grid.Row="4"  Text="."
-                                        BackgroundColor="#474c54"/>
+                                        BackgroundColor="#474c54"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="=" 
                                         Grid.Row="4" Grid.Column="2" Text="="
-                                        BackgroundColor="#477ca8"/>
+                                        BackgroundColor="#477ca8"
+                                        TextColor="White"/>
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="+" 
                                         Grid.Row="4" Grid.Column="3" Text="+"
-                                        BackgroundColor="#474c54"/>
+                                        BackgroundColor="#474c54"
+                                        TextColor="White"/>
                         </Grid>
                 </Grid>
 </ContentPage>

@@ -1,4 +1,5 @@
 using System.Data;
+using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiCalculator.Classes;
@@ -64,6 +65,8 @@ public partial class CalculatorViewModel : ObservableObject
         {
             try
             {
+                double test = CalculateExpression(NumberString);
+                NumberString = test.ToString(CultureInfo.InvariantCulture);
                 var result = NumberString;
                 //string result = System.Text.RegularExpressions.Regex.Replace(NumberString, @"\((\d+)\)(?![\-/*])", "*$1");
                 var value = new DataTable().Compute(NumberString, null).ToString();
@@ -73,6 +76,7 @@ public partial class CalculatorViewModel : ObservableObject
                     _popupService.ShowPopup(new PopupPage("Nice!!"));
 
                 _lastInputCalculate = true;
+                
             }
             catch
             {
@@ -96,5 +100,20 @@ public partial class CalculatorViewModel : ObservableObject
         
         var previousPage = currentPage.Navigation.NavigationStack[^2]; // Get the second-to-last page
         currentPage.Navigation.RemovePage(previousPage);
+    }
+    
+    
+    static double CalculateExpression(string expression)
+    {
+        expression = expression.Replace("%", "*0.01*");
+
+        DataTable table = new DataTable();
+        table.Columns.Add("expression", typeof(string), expression);
+
+        DataRow row = table.NewRow();
+        table.Rows.Add(row);
+
+        double result = Convert.ToDouble(row["expression"]);
+        return result;
     }
 }

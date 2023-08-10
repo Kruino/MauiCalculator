@@ -47,7 +47,7 @@
             
             <Button Text="Add"
                     BackgroundColor="#347C38"
-                    
+                    TextColor="White"
                     Command="{Binding AddCommand}"
                     Grid.Column="1"/>
         </Grid>
