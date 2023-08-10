@@ -85,6 +85,24 @@
                                </SwipeItemView>
                            </SwipeItems>
                        </SwipeView.RightItems>
+                       <SwipeView.LeftItems>
+                           <SwipeItems>
+                               <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainModelView}}, Path=CopyCommand}"
+                                              CommandParameter="{Binding .}">
+                                   <Grid
+                                       RowDefinitions="auto"
+                                       VerticalOptions="Fill"
+                                       Padding="20"
+                                       BackgroundColor="#22A6E7 ">
+                                       <Label Text="Copy"
+                                              FontSize="25"
+                                              TextColor="White"
+                                              VerticalOptions="Center"
+                                              HorizontalOptions="Center"/>
+                                   </Grid>
+                               </SwipeItemView>
+                           </SwipeItems>
+                       </SwipeView.LeftItems>
                        <Grid>
                            <Frame CornerRadius="0"
                                   BackgroundColor="#323840"

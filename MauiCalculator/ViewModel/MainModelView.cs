@@ -14,6 +14,7 @@ public partial class MainModelView : ObservableObject
     public MainModelView()
     {
         Items = new ObservableCollection<string>();
+        
         Calculator.CalculatorsChanged += OnCalculatorListChanged;
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         
@@ -57,6 +58,15 @@ public partial class MainModelView : ObservableObject
         Text = string.Empty;
     }
 
+    [RelayCommand]
+    void Copy(string value = null)
+    {
+        if(string.IsNullOrWhiteSpace(value))
+            value = "Calculator";
+        
+        Calculator.AddCalculator($"{value} Copy", Calculator.Calculators[value]);
+    }
+    
     [RelayCommand]
     void Delete(string s)
     {

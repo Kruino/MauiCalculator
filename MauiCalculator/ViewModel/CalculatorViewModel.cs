@@ -64,8 +64,9 @@ public partial class CalculatorViewModel : ObservableObject
         {
             try
             {
-                string result = System.Text.RegularExpressions.Regex.Replace(NumberString, @"\((\d+)\)(?![\-/*])", "*$1");
-                var value = new DataTable().Compute(result, null).ToString();
+                var result = NumberString;
+                //string result = System.Text.RegularExpressions.Regex.Replace(NumberString, @"\((\d+)\)(?![\-/*])", "*$1");
+                var value = new DataTable().Compute(NumberString, null).ToString();
                 if (value != null) NumberString = value;
 
                 if(value is "69" or "80085")
