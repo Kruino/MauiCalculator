@@ -18,7 +18,8 @@
                                HorizontalOptions="End"
                                VerticalOptions="Start"
                                FontSize="15"
-                               FontAttributes="Bold"/>
+                               FontAttributes="Bold"
+                               TextColor="Gray"/>
                         <Button Text="New with value"
                                 HorizontalOptions="Start"
                                 VerticalOptions="Start"
@@ -54,11 +55,27 @@
                                         Text="%"
                                         BackgroundColor="#474c54"/>
                                 
-                                <Button Command="{Binding AddToNumberCommand}" 
-                                        CommandParameter="AC" 
-                                        Grid.Column="3" 
-                                        Text="AC"
-                                        BackgroundColor="#a8475d"/>
+                                <Grid x:Name="ChangeGrid"
+                                      RowDefinitions="*, *"
+                                      ColumnDefinitions="*, *"
+                                      Grid.Column="3" 
+                                      RowSpacing="5"
+                                      ColumnSpacing="5">
+                                        <Button x:Name="AcButton"
+                                                Command="{Binding AddToNumberCommand}" 
+                                                CommandParameter="AC" 
+                                                Grid.ColumnSpan="2"
+                                                Text="AC"
+                                                BackgroundColor="#a8475d"/>
+                                        <Button x:Name="BackButton"
+                                                Grid.Row="1"
+                                                Grid.ColumnSpan="2"
+                                                Command="{Binding AddToNumberCommand}" 
+                                                CommandParameter="Back" 
+                                                Text="Back"
+                                                BackgroundColor="DarkOrange"/>
+                                </Grid>
+                                
                                 
                                 <Button Command="{Binding AddToNumberCommand}" 
                                         CommandParameter="7" 

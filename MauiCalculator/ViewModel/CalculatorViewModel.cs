@@ -34,24 +34,38 @@ public partial class CalculatorViewModel : ObservableObject
     [RelayCommand]
     private void AddToNumber(string s)
     {
-        if (_lastInputCalculate && s != "+" && s != "-" && s != "*" && s != "/" && s != "%")
+        if (s != "+" && s != "-" && s != "*" && s != "/" && s != "%")
         {
-            LastNumber = NumberString;
-            NumberString = string.Empty;
+            if (_lastInputCalculate)
+            {
+                LastNumber = NumberString;
+                NumberString = string.Empty;
+            }
+            else if (NumberString == "0")
+            {
+                NumberString = string.Empty;
+            }
         }
         
         _lastInputCalculate = false;
         
-        if (NumberString.Contains("Error") || NumberString == "0")
+        if (NumberString.Contains("Error"))
             NumberString = string.Empty;
+
 
         if (s.Contains("AC"))
             NumberString = "0";
+        else if(s.Contains("Back"))
+        {
+            if (NumberString != string.Empty)
+                NumberString = NumberString.Substring(0, NumberString.Length - 1);
+        }
         else if (s.Contains('='))
         {
             try
             {
-                var value = new DataTable().Compute(NumberString, null).ToString();
+                string result = System.Text.RegularExpressions.Regex.Replace(NumberString, @"\((\d+)\)(?![\-/*])", "*$1");
+                var value = new DataTable().Compute(result, null).ToString();
                 if (value != null) NumberString = value;
 
                 if(value is "69" or "80085")
