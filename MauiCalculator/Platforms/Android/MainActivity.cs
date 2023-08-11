@@ -10,3 +10,4 @@ namespace MauiCalculator;
 public class MainActivity : MauiAppCompatActivity
 {
 }
+

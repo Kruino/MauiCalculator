@@ -1,41 +1,15 @@
 ﻿using System.Collections.ObjectModel;
-using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Maui.Views;
+using System.Web;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiCalculator.Pages;
 using MauiCalculator.Classes;
+using MauiCalculator.Handlers;
 
 namespace MauiCalculator.ViewModel;
 
 public partial class MainModelView : ObservableObject
 {
-    public MainModelView()
-    {
-        Items = new ObservableCollection<string>();
-        
-        Calculator.CalculatorsChanged += OnCalculatorListChanged;
-        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-        
-        var window = App.Window;
-        window.Created += async (s, e) =>
-        {
-            var toast = Toast.Make("Welcome :D", ToastDuration.Short, 14);
-            await toast.Show(cancellationTokenSource.Token);
-        };
-        window.Resumed += async (s, e) =>
-        {
-            var toast = Toast.Make("Welcome Back :D", ToastDuration.Short, 14);
-            await toast.Show(cancellationTokenSource.Token);
-        };
-    }
-
-    private void OnCalculatorListChanged(object sender, Dictionary<string, string> e)
-    {
-        Items = new ObservableCollection<string>(e.Keys.ToList());
-    }
-    
     [ObservableProperty] 
     static ObservableCollection<string> _items;
 
@@ -47,6 +21,34 @@ public partial class MainModelView : ObservableObject
     
     private PopupService _popupService = new();
     
+    public MainModelView()
+    {
+        Items = new ObservableCollection<string>();
+        
+        
+        Calculator.CalculatorsChanged += OnCalculatorListChanged;
+        
+        var window = App.Window;
+        window.Created += (s, e) =>
+        {
+            ToastHandler.SendToast("Welcome :D");
+            DataHandler.Load();
+        };
+        window.Resumed += (s, e) =>
+        {
+            ToastHandler.SendToast("Welcome Back :D");
+            DataHandler.Load();
+        };
+        window.Stopped += (s, e) => DataHandler.Save();
+        window.Destroying += (s, e) => DataHandler.Save();
+        window.Deactivated += (s, e) => DataHandler.Save();
+    }
+    
+    private void OnCalculatorListChanged(object sender, Dictionary<string, string> e)
+    {
+        Items = new ObservableCollection<string>(e.Keys.ToList());
+    }
+    
     [RelayCommand]
     void Add(string value = null)
     {
@@ -56,6 +58,8 @@ public partial class MainModelView : ObservableObject
         Calculator.AddCalculator(Text, "0");
         
         Text = string.Empty;
+        
+        ToastHandler.SendToast($"{Text} Created");
     }
 
     [RelayCommand]
@@ -64,7 +68,8 @@ public partial class MainModelView : ObservableObject
         if(string.IsNullOrWhiteSpace(value))
             value = "Calculator";
         
-        Calculator.AddCalculator($"{value} Copy", Calculator.Calculators[value]);
+        Calculator.AddCalculator(value, Calculator.Calculators[value], true);
+        ToastHandler.SendToast($"{value} Copied");
     }
     
     [RelayCommand]
@@ -75,6 +80,8 @@ public partial class MainModelView : ObservableObject
 
         if (Calculator.Calculators.ContainsKey(s))
             Calculator.Calculators.Remove(s);
+        
+        ToastHandler.SendToast($"{s} Deleted");
     }
 
     [RelayCommand]
@@ -84,7 +91,13 @@ public partial class MainModelView : ObservableObject
 
             if (Calculator.Calculators[s] == null)
                 Calculator.Calculators.Add(s, "0");
-            
-            await Shell.Current.GoToAsync($"{nameof(CalculatorPage)}?Text={s}&NumberString={Calculator.Calculators[s]}");
+
+            var encoded = HttpUtility.UrlEncode(Calculator.Calculators[s]);
+
+            await Shell.Current.GoToAsync($"{nameof(CalculatorPage)}?Text={s}&NumberString={encoded}");
     }
+
+    [RelayCommand]
+    async Task GoToInfo() => await Shell.Current.GoToAsync(nameof(InfoPage));
+    
 }

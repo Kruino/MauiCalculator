@@ -1,13 +1,15 @@
 ﻿using System.Data;
 using System.Text.RegularExpressions;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace MauiCalculator.Classes;
 
 public static class Calculator
 {
         public static event EventHandler<Dictionary<string, string>> CalculatorsChanged;
+    
         private static Dictionary<string, string> _calculators = new();
-
+        
         public static Dictionary<string, string> Calculators
         {
                 get => _calculators;
@@ -18,27 +20,47 @@ public static class Calculator
                 }
         }
 
-        public static string AddCalculator(string key, string value)
+        public static string AddCalculator(string key, string value, bool copy = false)
         {
-                var number = 1;
-                if (Calculators.Keys.Contains(key))
-                {
-                    while (Calculators.Keys.Contains( $"{key} {number}"))
-                    {
-                        number++;
-                    }
 
-                    key = $"{key} {number}";
-                }
+            var name = GetName(key, Calculators.Keys.ToList(), copy); 
+            Dictionary<string, string> updatedDictionary = new Dictionary<string, string>();
                 
-                Dictionary<string, string> updatedDictionary = new Dictionary<string, string>(Calculators)
+            if(!copy)
+                updatedDictionary.Add(name, value);
+
+            foreach (var item in Calculators)
+            {
+                updatedDictionary.Add(item.Key, item.Value);
+                if (item.Key == key && copy)
+                    updatedDictionary.Add(name, value);
+            }
+                
+            Calculators = updatedDictionary;
+
+            return name;
+        }
+
+        public static string GetName(string name, List<string> names, bool copy = false)
+        {
+            var key = name;
+            if (copy)
+            {
+                name = $"{name} Copy";
+            }
+                
+            var number = 1;
+            if (names.Contains(name))
+            {
+                while (names.Contains( $"{name} {number}"))
                 {
-                    { key, value }
-                };
+                    number++;
+                }
 
-                Calculators = updatedDictionary; // This will trigger the event
+                name = $"{name} {number}";
+            }
 
-                return key;
+            return name;
         }
 
         public static string Calculate(string expression)

@@ -29,6 +29,8 @@ public static class MauiProgram
         builder.Services.AddTransient<CalculatorPage>();
         builder.Services.AddTransient<CalculatorViewModel>();
         
+        builder.Services.AddTransient<InfoPage>();
+        builder.Services.AddTransient<InfoPageViewModel>();
         return builder.Build();
     }
 }

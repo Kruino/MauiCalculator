@@ -2,125 +2,106 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiCalculator.MainPage"
+             xmlns:calculator="clr-namespace:MauiCalculator.Classes"
              xmlns:viewmodel="clr-namespace:MauiCalculator.ViewModel"
              x:DataType="viewmodel:MainModelView"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
-             Title="">
+             Title="ToastLator Home"
+             Shell.BackgroundColor="#1C2029"
+             BackgroundColor="#1C2029">
     
-    <ContentPage.Behaviors>
-        <mct:StatusBarBehavior StatusBarColor="#1C2029" />
-    </ContentPage.Behaviors>
+        <ContentPage.Behaviors>
+            <mct:StatusBarBehavior StatusBarColor="#1C2029" />
+        </ContentPage.Behaviors>
     
-    <Grid RowDefinitions="100, auto, auto, *"
-          ColumnDefinitions=".75*, .25*"
-          Padding="10"
-          RowSpacing="10"
-          ColumnSpacing="10"
-          BackgroundColor="#1C2029">
+        <ContentPage.ToolbarItems>
+            <ToolbarItem Text="Info" Command="{Binding GoToInfoCommand}" Priority="0"/>
+        </ContentPage.ToolbarItems>
         
-        <Frame Grid.ColumnSpan="2"
-               Grid.RowSpan="1"
-               CornerRadius="0"
-               BackgroundColor="#22272E"
-               BorderColor="Transparent">
-            <Grid ColumnDefinitions=".30*, .70*">
-            <Image Grid.ColumnSpan="1"
-                   Source="toast.png"/>
-            <Label Grid.Column="1"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   Text="#_ToastLator_#"
-                   TextColor="#ACBBC7"/>
+        <ScrollView >
+            <Grid RowDefinitions="auto, auto, *"
+                  ColumnDefinitions=".75*, .25*"
+                  Padding="10"
+                  RowSpacing="10"
+                  ColumnSpacing="10"
+                  BackgroundColor="#1C2029">
                 
-            </Grid>
-        </Frame>
-    <Frame Grid.Row="1" Grid.ColumnSpan="2"
-           CornerRadius="0"
-           BackgroundColor="#22272E"
-           BorderColor="Transparent">
-        <Grid ColumnDefinitions=".75*, .25*">
-            <Entry Placeholder="Enter calculator name"
-                   Text="{Binding Text}"
-                   TextColor="#ACBBC7"/>
-            
-            <Button Text="Add"
-                    BackgroundColor="#347C38"
-                    TextColor="White"
-                    Command="{Binding AddCommand}"
-                    Grid.Column="1"/>
-        </Grid>
-    </Frame>
-    
-    <Label Text="Swipe left to delete Calculator." 
-           TextColor="#ACBBC7"
-           FontAttributes="Bold"
-           HorizontalOptions="Center"
-           Grid.Row="2" Grid.ColumnSpan="2"/>
-    <Frame Grid.Row="3" Grid.ColumnSpan="2"
-           CornerRadius="0"
-           BackgroundColor="#22272E"
-           BorderColor="Transparent">
-       <CollectionView ItemsSource="{Binding Items}"
-                       SelectionMode="None">
-           <CollectionView.ItemTemplate>
-               <DataTemplate x:DataType="{x:Type x:String}">
-                   <SwipeView>
-                       <SwipeView.RightItems>
-                           <SwipeItems>
-                               <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainModelView}}, Path=DeleteCommand}"
-                                              CommandParameter="{Binding .}">
-                                   <Grid
-                                         RowDefinitions="auto"
-                                         VerticalOptions="Fill"
-                                         Padding="20"
-                                         BackgroundColor="Red">
-                                       <Label Text="X"
-                                              FontSize="25"
-                                              TextColor="White"
-                                              VerticalOptions="Center"
-                                              HorizontalOptions="Center"/>
-                                   </Grid>
-                               </SwipeItemView>
-                           </SwipeItems>
-                       </SwipeView.RightItems>
-                       <SwipeView.LeftItems>
-                           <SwipeItems>
-                               <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainModelView}}, Path=CopyCommand}"
-                                              CommandParameter="{Binding .}">
-                                   <Grid
-                                       RowDefinitions="auto"
-                                       VerticalOptions="Fill"
-                                       Padding="20"
-                                       BackgroundColor="#22A6E7 ">
-                                       <Label Text="Copy"
-                                              FontSize="25"
-                                              TextColor="White"
-                                              VerticalOptions="Center"
-                                              HorizontalOptions="Center"/>
-                                   </Grid>
-                               </SwipeItemView>
-                           </SwipeItems>
-                       </SwipeView.LeftItems>
-                       <Grid>
-                           <Frame CornerRadius="0"
-                                  BackgroundColor="#323840"
-                                  BorderColor="Transparent">
-                               <Frame.GestureRecognizers>
-                                   <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainModelView}}, Path=TapCommand}"
-                                                         CommandParameter="{Binding .}"/>
-                               </Frame.GestureRecognizers>
-                               <Label Text="{Binding .}"
-                                      FontSize="24"
-                                      TextColor="#ACBBC7"/>
-                           </Frame>
-                       </Grid>
-                   </SwipeView>
-               </DataTemplate>
-           </CollectionView.ItemTemplate>
-       </CollectionView>
-    </Frame>
-</Grid>
+                <Frame Grid.Row="0" Grid.ColumnSpan="2"
+                       CornerRadius="0"
+                       BackgroundColor="#22272E"
+                       BorderColor="Transparent"
+                       Padding="0">
+                    <Grid ColumnDefinitions=".75*, .25*"
+                          Padding="10">
+                        <Entry Placeholder="Enter Calculator Name"
+                               Text="{Binding Text}"
+                               TextColor="White"
+                               PlaceholderColor="#ACBBC7">
+                        </Entry>
+                        
+                        <Button Text="Add"
+                                BackgroundColor="#323840"
+                                CornerRadius="0"
+                                TextColor="White"
+                                Command="{Binding AddCommand}"
+                                Grid.Column="1"/>
+                    </Grid>
+                </Frame>
+                <Label Text="Swipe left/right for more options" 
+                       TextColor="#ACBBC7"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       Grid.Row="1" Grid.ColumnSpan="2"/>
+                <Frame Grid.Row="2" Grid.ColumnSpan="2"
+                       CornerRadius="0"
+                       BackgroundColor="#22272E"
+                       BorderColor="Transparent">
+                    
+                    <CollectionView ItemsSource="{Binding Items}"
+                                    SelectionMode="None"
+                                    MinimumWidthRequest="200">
+                        <CollectionView.ItemsLayout>
 
+                            <GridItemsLayout Orientation="Vertical"
+                                             HorizontalItemSpacing="5"
+                                             VerticalItemSpacing="5"/>
+                            </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                           <DataTemplate x:DataType="{x:Type x:String}">
+                               <SwipeView>
+                                   <SwipeView.RightItems>
+                                       <SwipeItems>
+                                           <SwipeItem  Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainModelView}}, Path=DeleteCommand}"
+                                                      CommandParameter="{Binding .}"
+                                                      BackgroundColor="Red"
+                                                      Text="X"/>
+                                       </SwipeItems>
+                                   </SwipeView.RightItems>
+                                   <SwipeView.LeftItems>
+                                       <SwipeItems>
+                                           <SwipeItem Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainModelView}}, Path=CopyCommand}"
+                                                          CommandParameter="{Binding .}"
+                                                          BackgroundColor="#22A6E7 "
+                                                          Text="Copy"/>
+                                       </SwipeItems>
+                                   </SwipeView.LeftItems>
+                                   <Frame CornerRadius="0"
+                                          BackgroundColor="#323840"
+                                          BorderColor="Transparent">
+                                       <Frame.GestureRecognizers>
+                                           <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainModelView}}, Path=TapCommand}"
+                                                                 CommandParameter="{Binding .}"/>
+                                       </Frame.GestureRecognizers>
+                                       <Label Text="{Binding .}"
+                                              FontSize="24"
+                                              TextColor="#ACBBC7"/>
+                                   </Frame>
+                               </SwipeView>
+                           </DataTemplate>
+                       </CollectionView.ItemTemplate>
+                   </CollectionView>
+                </Frame>
+            </Grid>
+        </ScrollView>
 </ContentPage>

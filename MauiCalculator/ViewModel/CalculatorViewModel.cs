@@ -1,9 +1,8 @@
-using System.Data;
-using System.Globalization;
-using System.Text.RegularExpressions;
+using System.Web;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiCalculator.Classes;
+using MauiCalculator.Handlers;
 using MauiCalculator.Pages;
 
 namespace MauiCalculator.ViewModel;
@@ -12,7 +11,6 @@ namespace MauiCalculator.ViewModel;
 [QueryProperty("NumberString", "NumberString")]
 public partial class CalculatorViewModel : ObservableObject
 {
-    
     [ObservableProperty]
     private string _text;
     
@@ -24,13 +22,32 @@ public partial class CalculatorViewModel : ObservableObject
 
     private bool _lastInputCalculate = false;
     
-    private PopupService _popupService = new();
+    private readonly PopupService _popupService = new();
+    
+    public CalculatorViewModel()
+    {
+        NumberString = HttpUtility.HtmlDecode(NumberString);
+    }
     
     [RelayCommand]
     private async Task GoBack()
     {
         await Shell.Current.GoToAsync("..");
-        
+    }
+
+    [RelayCommand]
+    private void DeleteNumber()
+    {
+        NumberString = "0";
+    }
+
+    [RelayCommand]
+    private void RemoveLast()
+    {
+        if (NumberString != string.Empty && NumberString != "0")
+            NumberString = NumberString.Substring(0, NumberString.Length - 1);
+        else
+            NumberString = "0";
     }
     
     [RelayCommand]
@@ -53,25 +70,18 @@ public partial class CalculatorViewModel : ObservableObject
         
         if (NumberString.Contains("Error"))
             NumberString = string.Empty;
-
-
-        if (s.Contains("AC"))
-            NumberString = "0";
-        else if(s.Contains("Back"))
-        {
-            if (NumberString != string.Empty)
-                NumberString = NumberString.Substring(0, NumberString.Length - 1);
-        }
-        else if (s.Contains('='))
+    
+        if (s.Contains('='))
         {
             try
             {
-                string value = Calculator.Calculate(NumberString);
+                var value = Calculator.Calculate(NumberString);
                 NumberString = value;
 
                 if(value is "69" or "80085")
                     _popupService.ShowPopup(new PopupPage("Nice!!"));
-
+                
+                
                 _lastInputCalculate = true;
             }
             catch
@@ -87,14 +97,10 @@ public partial class CalculatorViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task CreateNewWithValue()
+    private void CreateNewWithValue()
     {
-        var name = Calculator.AddCalculator($"{Text} Copy", NumberString);
+        ToastHandler.SendToast($"{Text} Copied");
+        Text = Calculator.AddCalculator(Text, NumberString, true);
         
-        var currentPage = Shell.Current;
-        await currentPage.GoToAsync($"{nameof(CalculatorPage)}?Text={name}&NumberString={NumberString}");
-        
-        var previousPage = currentPage.Navigation.NavigationStack[^2]; // Get the second-to-last page
-        currentPage.Navigation.RemovePage(previousPage);
     }
 }

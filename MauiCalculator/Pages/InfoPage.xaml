@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiCalculator.Pages.InfoPage"
+             xmlns:viewmodel="clr-namespace:MauiCalculator.ViewModel"
+             x:DataType="viewmodel:InfoPageViewModel"
+             Shell.BackgroundColor="#1C2029"
+             BackgroundColor="#1C2029"
+             Title="Info">
+    
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="20" Spacing="10">
+                <Label TextColor="White" FontAttributes="Bold" FontSize="20"
+                       Text="Features"/>
+                <StackLayout Padding="5"
+                             VerticalOptions="Center">
+                    <Label TextColor="#ACBBC7" FontSize="15" 
+                           Text='1: Create multiple calculators.'/>
+                    <Label TextColor="#ACBBC7" FontSize="15" 
+                           Text='2: Save calculator numbers.'/>
+                    <Label TextColor="#ACBBC7" FontSize="15" 
+                           Text='3: Copy calculator (Will copy the calculator and its value)'/>
+                    <Label TextColor="#ACBBC7" FontSize="15" 
+                           Text='4: Delete calculators will delete the calculator.'/>
+                </StackLayout>
+                <Label TextColor="White" FontAttributes="Bold" FontSize="20"
+                       Text="How To Use"/>
+                <Frame CornerRadius="0"
+                       BackgroundColor="#22272E"
+                       BorderColor="Transparent"
+                       Padding="0">
+                    <Grid ColumnDefinitions=".75*, .25*"
+                          Padding="10">
+                        <Entry Placeholder="Enter Calculator Name"
+                               Text="{Binding Text}"
+                               TextColor="White"
+                               PlaceholderColor="#ACBBC7"/>
+                            
+                        <Button Text="Add"
+                                BackgroundColor="#323840"
+                                CornerRadius="0"
+                                TextColor="White"
+                                Grid.Column="1"/>
+                    </Grid>
+                </Frame>
+                
+                <Label TextColor="#ACBBC7" FontSize="15" 
+                       Text='This Field will add a calculator with the name entered or the standard name of "Calculator", &#10; &#10;This will add a number behind either the entered name, or the standard name if it already exists. &#10;&#10;When it has found a name that works it will add a new calculator to the list below. Like this one.'/>
+                <Frame CornerRadius="0"
+                       BackgroundColor="#22272E"
+                       BorderColor="Transparent">
+                <CollectionView SelectionMode="None"
+                                MinimumWidthRequest="200">
+                    
+                    <CollectionView.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Calculator</x:String>
+                        </x:Array>
+                    </CollectionView.ItemsSource>
+                    
+                    <CollectionView.ItemsLayout>
+
+                                <GridItemsLayout Orientation="Vertical"
+                                                 HorizontalItemSpacing="5"
+                                                 VerticalItemSpacing="5"/>
+                                </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                               <DataTemplate x:DataType="{x:Type x:String}">
+                                   <SwipeView>
+                                       <SwipeView.RightItems>
+                                           <SwipeItems>
+                                               <SwipeItem BackgroundColor="Red"
+                                                          Text="X"/>
+                                           </SwipeItems>
+                                       </SwipeView.RightItems>
+                                       <SwipeView.LeftItems>
+                                           <SwipeItems>
+                                               <SwipeItem BackgroundColor="#22A6E7 "
+                                                          Text="Copy"/>
+                                           </SwipeItems>
+                                       </SwipeView.LeftItems>
+                                       <Frame CornerRadius="0"
+                                              BackgroundColor="#323840"
+                                              BorderColor="Transparent">
+                                           <Label Text="{Binding .}"
+                                                  FontSize="24"
+                                                  TextColor="#ACBBC7"/>
+                                       </Frame>
+                                   </SwipeView>
+                               </DataTemplate>
+                           </CollectionView.ItemTemplate>
+                       </CollectionView>
+                    </Frame>
+                
+                <Label TextColor="#ACBBC7" FontSize="15" 
+                       Text='With this you have 3 actions you can do: '/>
+                <StackLayout>
+                    <Label TextColor="#ACBBC7" FontSize="12" 
+                           Text='1: Press on it to go into the calculator.'/>
+                    <Label TextColor="#ACBBC7" FontSize="12" 
+                           Text='2: Swipe right and press to make a copy.'/>
+                    <Label TextColor="#ACBBC7" FontSize="12" 
+                           Text='3: Swipe left and press X to delete the calculator.'/>
+                </StackLayout>
+                
+                <Label TextColor="#ACBBC7" FontSize="15" 
+                       Text='Once you are in the calculator. You will have the basic calculator functions, and some extra functions'/>
+                <HorizontalStackLayout>
+                    <Button  Text="Delete"
+                             BackgroundColor="#d45b53"
+                             HeightRequest="100"
+                             WidthRequest="75"
+                             TextColor="White"/>
+                    <StackLayout Padding="5"
+                                 VerticalOptions="Center">
+                        <Label TextColor="#ACBBC7" FontSize="15" 
+                               Text='The Delete Button has 2 functions '/>
+                        <Label TextColor="#ACBBC7" FontSize="12" 
+                               Text='1: Press on it to remove the last character'/>
+                        <Label TextColor="#ACBBC7" FontSize="12" 
+                               Text='2: Hold it to delete the entire Number'/>
+                    </StackLayout>
+                </HorizontalStackLayout>
+                <Label TextColor="#ACBBC7" FontSize="15" 
+                       Text='You have one more New thing within the calculator.'/>
+                <Frame BackgroundColor="#22272E" BorderColor="Transparent">
+                    <Frame BackgroundColor="#1C2029">
+                        <Grid>
+                            <Label TextColor="White" Text="Calculator"
+                                   FontSize="15"
+                                   FontAttributes="Bold"
+                                   VerticalOptions="Center"/>
+                            <Button Text="Copy Calculator"
+                                    HorizontalOptions="End"
+                                    BackgroundColor="#1C2029"
+                                    Padding="5"></Button>
+                        </Grid>
+                    </Frame>
+                </Frame>
+                <Label TextColor="#ACBBC7" FontSize="15" 
+                       Text='If you press "Copy Calculator". It will copy the current calculator and go straight into it.'/>
+                
+                <Label TextColor="white" FontAttributes="Bold" FontSize="20" 
+                       Text='Why I Created This'/>
+                <Label TextColor="#ACBBC7" FontSize="15" 
+                       Text='This app was a school project. That was made in a little under a week. So that is the reason for creating it.'/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
